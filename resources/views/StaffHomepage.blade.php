@@ -1,9 +1,8 @@
 <?php
-session_start();
-$siteName = config('config.site_name');
-echo $siteName;
-?>
 
+session_start();
+require ('config.php');
+?>
 <!DOCTYPE html>
 <html>
 
@@ -11,80 +10,86 @@ echo $siteName;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Anton|Canva+Sans">
-    <title>Yosh Homepage!!!!?????</title>
-
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Anton|Canva Sans">
+    <!-- <link rel="stylesheet" href="aboutUsStyle.css"> -->
 </head>
 
 <body>
     <header>
         <div class="navbar">
             <div class="logo">
-                <a href="{{route('yosh.home')}}">
-                    <img src="{{ asset('images/IMG/yoshLogo.png') }}" class="logo-image">
+                <!-- <a href="AboutUs.php"><img src="yoshLogo.png" class="logo-image"></a> -->
+                <a href="StaffHomePage.php">
+                    <img src="IMG/yoshLogo.png" class="logo-image">
                 </a>
             </div>
 
             <?php
-        if (isset($_SESSION['volunteerID'])) {
-            echo '<ul class="links">
-                      <li><a href="' . route('event.list') . '">Event</a></li>
-                      <li><a href="' . route('mark.attendance') . '">Attendance</a></li>
-                      <li><a href="' . route('notification') . '">Notifications</a></li>
-                      <div id="sign-in-out" class="dropdown">
-                           <button class="dropbtn">Welcome, ' . $_SESSION['name'] . '<i class="fa fa-caret-down"></i></button>
-                           <div class="dropdown-content">
-                               <a href="' . route('profile') . '">My Account</a>
-                               <a href="' . route('logout') . '">Log Out</a>
-                           </div>
-                      </div>
-                    </ul>';
-        } else {
-            echo '<ul class="links">
-                     <div id="sign-in-out">
-                           <li><a href="' . route('login') . '"><i class="fa-regular fa-user" style="color: #282B76;"></i>Sign in</a></li>
-                     </div>
-                     <div id="sign-in-out">
-                           <li><a href="' . route('login.interface.staff') . '"><i class="fa-regular fa-user" style="color: #282B76;"></i>Sign in Staff</a></li>
-                     </div>
-                  </ul>';
-        }
-        ?>
+            if (isset($_SESSION['staffID'])) {
+                // If user is logged in, show sign out button
+                echo '<ul class="links">
+                          <div id="sign-in-out" class="dropdown">
+                               <button class="dropbtn">Event<i class="fa fa-caret-down"></i></button>
+                               <div class="dropdown-content">
+                                   <a href="ManageListEvent.php">Manage Event</a>
+                                   <a href="approveEvent.php">Approval Payment Event</a>
+                               </div>
+                </div> 
+                <li><a href="approveSubscription.php">Volunteer</a></li>
+                         
+               <div id="sign-in-out" class="dropdown">
+                               <button class="dropbtn">Welcome, ' . ($_SESSION['staffName']) . '<i class="fa fa-caret-down"></i></button>
+                               <div class="dropdown-content">
+                                   <a href="logout.php">Log Out</a>
+                               </div>
+                          </div>
+                        </ul>';
+            } else {
+                // If user is not logged in, show sign in button
+                echo '<ul class="links">
+                         <li><a href="#">About Us</a></li>
+                         <div id="sign-in-out">
+                               <li><a href="logInInterfaceStaff.php"><i class="fa-regular fa-user" style="color: #282B76;"></i>Sign in</a></li>
+                         </div>
+                      </ul>';
+            }
+            ?>
+
+            <!-- <a href="#footer" class="action_btn">Contact Us</a> -->
         </div>
+
     </header>
     <div class="main-content">
         <div class="text-content">
             <h1>Youth Of Strength and Happiness (YOSH)</h1>
             <p>Explore over 100 volunteer events in your area and receive rewards for your hard work! Sign up with us to
-                easily find any event through Yosh MyFundAction.<br><br>
-                <?php
-                if (isset($_SESSION['volunteerID'])) {
-                    echo '<a href="' . url('/event-list') . '" class="sign">JOIN US</a>';
-                } else {
-                    echo '<a href="' . url('/login') . '" class="sign">JOIN US</a>';
-                }
-                ?>
+                easily find any event through Yosh MyFundAction.
             </p>
         </div>
         <div class="image-content">
-            <img src= "{{ asset('images/IMG/adminYosh.jpg') }}" alt="Group Photo">
+            <img src="img/adminYosh.jpg" alt="Group Photo">
         </div>
     </div>
-
-
-
 </body>
 <style>
     body {
         font-family: Arial, sans-serif;
         background-color: #483600;
+        /* Adjusted background color */
         display: center;
         justify-content: center;
         align-items: center;
         height: 100vh;
         margin: 0;
         color: white;
+    }
+
+    /*header css*/
+    body,
+    li {
+        font-family: Arial, sans-serif;
+
+
     }
 
     .links .right {
@@ -95,20 +100,24 @@ echo $siteName;
 
     li {
         list-style: none;
+
     }
 
     .links a {
         text-decoration: none;
         color: #FFFFFF;
+        /* Changed to white */
         font-size: 1rem;
         padding: 5px 10px;
         margin-right: auto;
+        text-align: ;
     }
 
     a:hover {
         border-bottom: 2px solid black;
         border-color: #009688;
         color: #009688;
+
     }
 
     header {
@@ -123,6 +132,7 @@ echo $siteName;
     .navbar {
         width: 100%;
         height: 60px;
+
         margin: 0px auto;
         display: flex;
         align-items: center;
@@ -139,6 +149,7 @@ echo $siteName;
         margin-right: auto;
         display: flex;
         gap: 1.5rem;
+
     }
 
     .navbar .toggle_btn {
@@ -163,11 +174,13 @@ echo $siteName;
     .action_btn:hover {
         scale: 1.05;
         color: #fff;
+
     }
 
     .action_btn:active {
         scale: 0.95;
         text-decoration: underline;
+
     }
 
     .dropdown {
@@ -180,6 +193,8 @@ echo $siteName;
         border: none;
         outline: none;
         color: #FFFFFF;
+        width: auto;
+        /* Changed to white */
         background-color: transparent;
         cursor: pointer;
     }
@@ -213,10 +228,37 @@ echo $siteName;
         list-style: none;
     }
 
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .logo-bottom img {
+        float: left;
+        width: 200px;
+        margin-top: 10px;
+    }
+
+    .logo-image {
+        width: 200px;
+        height: auto;
+        margin-top: 10px;
+    }
+
+
+
+
+
+
+
+
+
+    /*homepage css*/
     .main-content {
         display: flex;
         justify-content: space-between;
         padding: 50px;
+        font
     }
 
     .main-content .text-content {
@@ -224,6 +266,7 @@ echo $siteName;
     }
 
     .main-content .sign {
+
         position: relative;
         top: 20px;
         background-size: 120%;
@@ -247,6 +290,7 @@ echo $siteName;
     .main-content .sign:hover {
         background-color: #009688;
     }
+
 
     .main-content .image-content img {
         width: 100%;
